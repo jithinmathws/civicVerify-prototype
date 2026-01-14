@@ -270,6 +270,6 @@ This scoping reflects the constraints of a single-developer research project and
 ## 16. Contact
 
 **Jithin Mathews**
-GitHub: *[your GitHub profile]*
+GitHub: **
 
 Feedback and discussion are welcome.
