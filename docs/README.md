@@ -1,7 +1,7 @@
 ## Documentation
 
-- [System Architecture](docs/architecture.md)
-- [Reward Algorithm Design](docs/reward_algorithm.md)
+- [System Architecture](architecture.md)
+- [Reward Algorithm Design](reward_algorithm.md)
 
 # Crowdsourced Fact‑Checking Platform (Research Prototype)
 
