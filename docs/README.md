@@ -1,3 +1,8 @@
+## Documentation
+
+- [System Architecture](docs/architecture.md)
+- [Reward Algorithm Design](docs/reward_algorithm.md)
+
 # Crowdsourced Fact‑Checking Platform (Research Prototype)
 
 > **Status:** Exploratory / Research Prototype
