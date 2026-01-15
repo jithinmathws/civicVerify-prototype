@@ -8,9 +8,6 @@
 > **Author:** Jithin Mathews
 > **Status:** Exploratory / Non‑production Architecture
 
-This project explores how to build a scalable, crowdsourced fact-checking platform where contributors upload multimedia evidence (photos, videos, metadata) to verify claims. Evidence is validated through AI-assisted checks and human moderation, with contributors rewarded dynamically based on demand–supply dynamics, timeliness, and quality.
-This is a personal learning project, not a commercial product. The architecture is designed to demonstrate backend system design, incentive models, and trust frameworks.
-
 ---
 
 ## 1. Architectural Goals

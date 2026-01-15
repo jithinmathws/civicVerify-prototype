@@ -1,5 +1,7 @@
 # CrowdVerify
 
+This project explores how to build a scalable, crowdsourced fact-checking platform where contributors upload multimedia evidence (photos, videos, metadata) to verify claims. Evidence is validated through AI-assisted checks and human moderation, with contributors rewarded dynamically based on demand–supply dynamics, timeliness, and quality.
+
 CrowdVerify is an exploratory backend prototype for a **crowdsourced media verification platform**.
 It explores how distributed contributors can submit evidence for real-world events, and how
 incentives, verification signals, and system design interact under uncertainty.
