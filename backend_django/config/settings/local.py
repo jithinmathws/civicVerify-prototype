@@ -13,7 +13,7 @@ else:
 SECRET_KEY = getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = getenv("DEBUG", default="False").lower() in ("true", "1", "t")
+DEBUG = getenv("DEBUG")
 
 SITE_NAME = getenv("SITE_NAME", "Local")
 
