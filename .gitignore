@@ -2,7 +2,7 @@
 .idea
 .DS_Store
 backend_django/staticfiles/
-**/.envs/*
+**/.envs/
 !.envs/.env.example
 
 # Byte-compiled / optimized / DLL files
