@@ -1,8 +1,8 @@
 .vscode
 .idea
 .DS_Store
-staticfiles/
-.envs/*
+backend_django/staticfiles/
+backend_django/.envs/*
 !.envs/.env.example
 
 # Byte-compiled / optimized / DLL files
