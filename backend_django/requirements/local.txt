@@ -1,0 +1,5 @@
+-r base.txt
+
+watchfiles==1.1.1
+black==25.12.0
+isort==7.0.0
