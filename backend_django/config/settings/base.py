@@ -41,11 +41,17 @@ THIRD_PARTY_APPS = [
 LOCAL_APPS = [
     "apps.user_auth",
     "apps.common",
+    "apps.contributors",
+    "apps.claims",
+    "apps.evidence",
+    "apps.rewards",
+    "apps.tests",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 MIDDLEWARE = [
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -60,7 +66,7 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [str(BASE_DIR / "templates")],
+        'DIRS': [str(APPS_DIR / "templates")],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -139,6 +145,42 @@ STATIC_ROOT = str(BASE_DIR / "staticfiles")
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = "user_auth.User"
+
+REST_FRAMEWORK = {
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.SessionAuthentication",
+    ],
+
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.AllowAny",
+    ],
+
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "PAGE_SIZE": 10,
+}
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "CivicVerify",
+    "DESCRIPTION": (
+        "API for crowdsourced media verification and claim validation. "
+        "This service provides core backend functionality for submitting, "
+        "reviewing, and validating evidence related to real-world events."
+    ),
+    "VERSION": "0.1.0",
+    "SERVE_INCLUDE_SCHEMA": False,
+    "LICENSE": {
+        "name": "MIT",
+        "url": "https://opensource.org/license/mit/",
+    },
+    "CONTACT": {
+        "name": "Jithin Mathews",
+        "email": "mathewsjithin@yahoo.com",
+    },
+}
 
 LOGGING_CONFIG = None
 

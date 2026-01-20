@@ -31,6 +31,7 @@ The architecture favors clarity and auditability over optimization.
 - [Design Documents](docs/README.md)
   - [System Architecture](docs/architecture.md)
   - [Reward Algorithm](docs/reward_algorithm.md)
+  - [Django Apps](backend_django/apps/README.md)
 
 ---
 

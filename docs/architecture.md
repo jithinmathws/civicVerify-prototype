@@ -236,6 +236,8 @@ Scalability is discussed as a **design exercise**, not a performance claim.
 
 ## 11. Known Architectural Limitations
 
+Authentication, authorization, and throttling are intentionally relaxed during prototyping and will be enforced at the API and gateway level in later stages.
+
 * No strong identity guarantees
 * No cryptographic media provenance
 * Reputation bootstrapping remains unresolved
