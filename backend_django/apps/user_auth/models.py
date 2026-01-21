@@ -10,6 +10,7 @@ class User(AbstractUser):
 
     username = models.CharField(max_length=150, unique=True)
     email = models.EmailField(_("email address"), unique=True, db_index=True)
+    full_name = models.CharField(max_length=150, blank=True)
 
     objects = UserManager()
 
