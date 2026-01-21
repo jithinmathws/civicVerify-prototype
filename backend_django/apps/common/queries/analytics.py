@@ -1,6 +1,6 @@
 def get_view_count(content_object):
     from django.contrib.contenttypes.models import ContentType
-    from apps.common.models import ContentView
+    from apps.common.models.content_view import ContentView
 
     ct = ContentType.objects.get_for_model(content_object)
     return ContentView.objects.filter(
@@ -11,7 +11,7 @@ def get_view_count(content_object):
 
 def get_unique_viewers(content_object):
     from django.contrib.contenttypes.models import ContentType
-    from apps.common.models import ContentView
+    from apps.common.models.content_view import ContentView
 
     ct = ContentType.objects.get_for_model(content_object)
     return (

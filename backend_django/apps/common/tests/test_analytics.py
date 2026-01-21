@@ -1,7 +1,7 @@
 from django.test import TestCase
-from common.models import ContentView
-from common.queries.analytics import get_view_count
-from common.tests.utils import create_user
+from apps.common.models import ContentView
+from apps.common.queries.analytics import get_view_count
+from apps.common.tests.utils import create_user
 
 
 class AnalyticsTests(TestCase):

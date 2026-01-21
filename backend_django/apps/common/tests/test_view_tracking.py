@@ -1,12 +1,18 @@
-from django.test import TestCase
-from common.services.view_tracking import should_count_view
-from common.tests.utils import create_user
+import uuid
 
+from django.test import TestCase
+from apps.common.services.view_tracking import should_count_view
+from apps.common.tests.utils import create_user
+
+class DummyContent:
+    def __init__(self, created_by_id=None):
+        self.id = uuid.uuid4()
+        self.created_by_id = created_by_id
 
 class ViewTrackingTests(TestCase):
     def setUp(self):
         self.user = create_user()
-        self.content = self.user  # dummy content
+        self.content = DummyContent(created_by_id=self.user.id)
 
     def test_does_not_count_self_view(self):
         result = should_count_view(

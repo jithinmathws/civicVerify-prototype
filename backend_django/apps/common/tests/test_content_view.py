@@ -1,13 +1,14 @@
 from django.test import TestCase
 from django.contrib.contenttypes.models import ContentType
 
-from common.models import ContentView
-from common.tests.utils import create_user
+from apps.common.models import ContentView
+from apps.common.tests.utils import create_user
 
 
 class ContentViewTests(TestCase):
     def setUp(self):
         self.user = create_user()
+
         self.content = self.user  # using User as dummy content object
 
     def test_record_view_creates_entry(self):
