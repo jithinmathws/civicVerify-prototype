@@ -33,15 +33,41 @@ Out of scope:
 
 ---
 
-### `contributors`
-Represents contributors as participants in the platform.
+### `common`
+Shared infrastructure and cross-cutting utilities used across Django apps.
 
 Responsibilities:
-- Contributor metadata
-- Participation history
-- Linkage between users and contributions
+- Abstract base models (e.g. `TimeStampedModel`)
+- Cross-app domain models (e.g. content view tracking)
+- Generic services (anti-abuse, rate limiting, heuristics)
+- Reusable permissions, helpers, and utilities
+- Shared testing utilities and fixtures
 
-Note: This is distinct from authentication and focuses on **behavioral participation**, not identity.
+Design principles:
+- Contains **no app-specific business logic**
+- Safe to depend on from any other app
+- Optimized for reuse, auditability, and testability
+
+Examples:
+- View tracking with anti-gaming safeguards
+- Rate limiting and abuse detection utilities
+- UUID-based base models and shared mixins
+
+Feature-specific logic should not live in this app.
+
+---
+
+### `contributors`
+Represents contributors as trust-bearing participants in the platform.
+
+Responsibilities:
+- Contributor profiles linked to users
+- Reputation tracking and audit logs
+- Contributor-specific permissions and access rules
+- Participation and verification-related metadata
+
+Note: This app is distinct from authentication and identity.
+It models **behavior, trust, and participation state**, not login or credentials.
 
 ---
 
