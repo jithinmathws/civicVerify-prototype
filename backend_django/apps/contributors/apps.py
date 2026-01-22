@@ -7,4 +7,4 @@ class ContributorsConfig(AppConfig):
     verbose_name = _("Contributors")
 
     def ready(self):
-        import apps.contributors.signals
+        import apps.contributors.signals  # noqa

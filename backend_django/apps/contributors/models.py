@@ -1,6 +1,8 @@
 from django.db import models
 from django.conf import settings
 from apps.common.models import TimeStampedModel
+from django.db.models import F
+from django.db import transaction
 
 class Contributor(TimeStampedModel):
     """
@@ -22,15 +24,34 @@ class Contributor(TimeStampedModel):
     def __str__(self):
         return self.display_name or self.user.email
 
-    def adjust_reputation(self, change: float, reason: str) -> None:
+    
+    
+    def adjust_reputation(self, change: float, reason: str):
         """
         Adjust contributor reputation and record an audit log.
         """
-        self.reputation_score = max(0.0, self.reputation_score + change)
-        self.save(update_fields=["reputation_score"])
+        with transaction.atomic():
+            Contributor.objects.filter(pk=self.pk).update(
+                reputation_score=F("reputation_score") + change
+            )
+            ReputationLog.objects.create(
+                contributor=self,
+                change=change,
+                reason=reason,
+            )
 
-        ReputationLog.objects.create(
-            contributor=self,
-            change=change,
-            reason=reason,
-        )
+
+class ReputationLog(TimeStampedModel):
+    """
+    Audit log for reputation changes.
+    """
+    contributor = models.ForeignKey(
+        Contributor,
+        on_delete=models.CASCADE,
+        related_name="reputation_logs",
+    )
+    change = models.FloatField()
+    reason = models.CharField(max_length=255)
+    
+    def __str__(self):
+        return f"{self.contributor.display_name}: {self.change} ({self.reason})"
