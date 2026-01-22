@@ -46,6 +46,8 @@ LOCAL_APPS = [
     "apps.evidence",
     "apps.rewards",
     "apps.tests",
+
+    "apps.contributors.apps.ContributorsConfig",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
