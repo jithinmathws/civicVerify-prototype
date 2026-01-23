@@ -1,4 +1,3 @@
-import uuid
 from django.conf import settings
 from django.db import models
 from django.utils.translation import gettext_lazy as _
@@ -52,5 +51,9 @@ class ClaimTag(models.Model):
     name = models.CharField(max_length=50, unique=True)
     claims = models.ManyToManyField(Claim, related_name="tags")
     
+    def save(self, *args, **kwargs):
+        self.name = self.name.lower()
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return self.name
