@@ -1,5 +1,7 @@
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated, AllowAny
+from django.db.models import Q
+
 from apps.claims.models import Claim
 from apps.claims.serializers import ClaimCreateSerializer, ClaimDetailSerializer, ClaimListSerializer
 from apps.claims.permissions import (

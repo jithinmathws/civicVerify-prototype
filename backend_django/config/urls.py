@@ -21,6 +21,7 @@ urlpatterns = [
         name="redoc",
     ),
     path("contributors/", include("apps.contributors.urls")),
+    path("claims/", include("apps.claims.urls")),
 ]
 
 admin.site.site_header = "CivicVerify Admin"

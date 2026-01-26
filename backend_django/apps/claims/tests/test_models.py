@@ -119,8 +119,8 @@ class ClaimTagModelTests(TestCase):
         self.claim.tags.add(tag1, tag2)
 
         self.assertEqual(self.claim.tags.count(), 2)
-        self.assertIn(self.claim, tag1.claim_set.all())
-        self.assertIn(self.claim, tag2.claim_set.all())
+        self.assertIn(tag1, self.claim.tags.all())
+        self.assertIn(tag2, self.claim.tags.all())
 
     def test_tag_uniqueness_with_integrity_error(self):
         ClaimTag.objects.create(name="Science")

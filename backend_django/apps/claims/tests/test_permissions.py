@@ -31,7 +31,21 @@ class BasicTest(APITestCase):
     def test_list_claims_ordering(self):
         url = reverse("claims:claim-list")
         response = self.client.get(url)
-        titles = [c["title"] for c in response.data]
+        
+        # 1. Ensure the request was successful (200 OK)
+        self.assertEqual(response.status_code, 200)
+
+        # 2. Handle Pagination: Check if data is in 'results' or the root
+        if isinstance(response.data, dict) and "results" in response.data:
+            data = response.data["results"]
+        else:
+            data = response.data
+
+        # 3. Extract titles (safely using .get to avoid further KeyErrors)
+        titles = [c.get("title") if isinstance(c, dict) else c for c in data]
+        
+        # 4. Assertions
+        self.assertTrue(len(titles) > 0, "The claims list is empty.")
         self.assertEqual(titles[0], "Public")
 
 
@@ -133,11 +147,13 @@ class ClaimContributorPermissionTests(APITestCase):
             email="contrib@example.com", password="pass123"
         )
 
-        # contributor profile must exist
-        Contributor.objects.create(
-            user=self.user,
-            display_name="Contributor",
-        )
+        # contributor profile is auto-created by signal; ensure it exists
+        contributor = getattr(self.user, "contributor_profile", None)
+        if not contributor:
+            Contributor.objects.create(
+                user=self.user,
+                display_name="Contributor",
+            )
 
         self.client.force_authenticate(user=self.user)
 

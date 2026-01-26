@@ -1,41 +1,12 @@
 from rest_framework import serializers
-from apps.claims.models import Claim
-from apps.users.serializers import UserPublicSerializer
+from apps.claims.models import Claim, ClaimTag
+from apps.user_auth.serializers import UserPublicSerializer
 
 class ClaimBaseSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Claim
         fields = ["title", "description", "is_public"]
-
-class ClaimCreateSerializer(ClaimBaseSerializer):
-
-    def create(self, validated_data):
-        validated_data.pop("created_by", None)
-        request = self.context.get("request")
-        user = getattr(request, "user", None)
-
-        return Claim.objects.create(
-            created_by=user,
-            **validated_data
-        )
-
-class ClaimDetailSerializer(ClaimBaseSerializer):
-    created_by = UserPublicSerializer(read_only=True)
-    
-    class Meta(ClaimBaseSerializer.Meta):
-        fields = ClaimBaseSerializer.Meta.fields + [
-            "id",
-            "status",
-            "created_by",
-            "created_at",
-        ]
-        read_only_fields = [
-            "id",
-            "status",
-            "created_by",
-            "created_at",
-        ]
 
 class ClaimListSerializer(serializers.ModelSerializer):
     
@@ -49,20 +20,34 @@ class ClaimTagSerializer(serializers.ModelSerializer):
         fields = ["name"]
 
 class ClaimCreateSerializer(serializers.ModelSerializer):
-    tags = serializers.ListField(
-        child=serializers.CharField(),
-        required=False,
+    created_by = UserPublicSerializer(read_only=True)
+    # Use SlugRelatedField to convert ClaimTag objects into their 'name' string
+    tags = serializers.SlugRelatedField(
+        many=True,
+        slug_field="name",
+        queryset=ClaimTag.objects.all(),
+        required=False
     )
 
     class Meta:
         model = Claim
-        fields = ["title", "description", "is_public", "tags"]
+        fields = ["title", "description", "is_public", "tags", "created_by"]
+        read_only_fields = ["created_by"]
 
     def create(self, validated_data):
-        tags_data = validated_data.pop("tags", [])
+        # Pop tags (many-to-many) before creating the Claim
+        tag_names = validated_data.pop("tags", [])
+        # Set created_by from request
+        request = self.context.get("request")
+        if request and hasattr(request, "user"):
+            validated_data["created_by"] = request.user
         claim = Claim.objects.create(**validated_data)
 
-        self._set_tags(claim, tags_data)
+        # Add tags to the claim
+        for name in tag_names:
+            tag, _ = ClaimTag.objects.get_or_create(name=name)
+            claim.tags.add(tag)
+
         return claim
 
     def _set_tags(self, claim, tags):
@@ -111,4 +96,9 @@ class ClaimDetailSerializer(serializers.ModelSerializer):
             "created_by",
             "created_at",
             "tags",
+        ]
+        read_only_fields = [
+            "id",
+            "created_by",
+            "created_at",
         ]
